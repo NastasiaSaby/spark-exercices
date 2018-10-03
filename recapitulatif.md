@@ -9,7 +9,7 @@ println(age)
 
 ## Scala fonction
 
-```
+```scala
 def speak() = {
   println("salut")
 }
@@ -18,7 +18,7 @@ speak()
 ```
 salut
 
-```
+```scala
 def speak(word: String) = {
   println(word)
 }
@@ -27,7 +27,7 @@ speak("hello ")
 ```
 hello
 
-```
+```scala
 def sendWord(word: String) = {
   "hello " + word
 }
@@ -38,7 +38,7 @@ hello world
 
 ## Case class
 
-```
+```scala
 case class Personne(age: Int, name: String)
 val personne1 = Personne(12, "Lucien")
 
