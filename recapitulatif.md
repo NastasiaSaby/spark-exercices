@@ -1,7 +1,7 @@
 # Récapitulatif
 ## Scala variable
 
-```
+```scala
 val age = 12
 println(age) 
 ```
