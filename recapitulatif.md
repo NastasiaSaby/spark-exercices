@@ -112,3 +112,83 @@ diamondsWithHeader.show
 | 20|  0.3|Very Good|    J|    SI1| 62.7|   59|  351|4.21|4.27|2.66|
 +---+-----+---------+-----+-------+-----+-----+-----+----+----+----+
 ```
+
+## Imprimer le schéma de data
+
+```scala
+diamondsWithHeader.printSchema
+```
+
+```
+root
+ |-- _c0: string (nullable = true)
+ |-- carat: string (nullable = true)
+ |-- cut: string (nullable = true)
+ |-- color: string (nullable = true)
+ |-- clarity: string (nullable = true)
+ |-- depth: string (nullable = true)
+ |-- table: string (nullable = true)
+ |-- price: string (nullable = true)
+ |-- x: string (nullable = true)
+ |-- y: string (nullable = true)
+ |-- z: string (nullable = true)
+```
+
+## Inférer le schéma de data dans un fichier csv
+
+```scala
+val completeDiamonds = spark.read.option("header", "true").option("inferSchema", "true").csv("/databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv")
+completeDiamonds.printSchema
+```
+
+```
+root
+ |-- _c0: integer (nullable = true)
+ |-- carat: double (nullable = true)
+ |-- cut: string (nullable = true)
+ |-- color: string (nullable = true)
+ |-- clarity: string (nullable = true)
+ |-- depth: double (nullable = true)
+ |-- table: double (nullable = true)
+ |-- price: integer (nullable = true)
+ |-- x: double (nullable = true)
+ |-- y: double (nullable = true)
+ |-- z: double (nullable = true)
+```
+
+## Lire un fichier json
+
+```scala
+val people = spark.read.json("/FileStore/tables/people.json")
+people.show
+```
+
+```
++----+-------+
+| age|   name|
++----+-------+
+|null|Michael|
+|  30|   Andy|
+|  19| Justin|
++----+-------+
+```
+
+## Créer une table dans Spark
+
+```scala
+people.createOrReplaceTempView("people")
+
+spark.sql("""
+select * from people
+""").show
+```
+
+```
++----+-------+
+| age|   name|
++----+-------+
+|null|Michael|
+|  30|   Andy|
+|  19| Justin|
++----+-------+
+```
