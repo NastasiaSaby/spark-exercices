@@ -192,3 +192,53 @@ select * from people
 |  19| Justin|
 +----+-------+
 ```
+
+## Filtrer
+
+```scala
+val filteredPeople = spark.sql("""
+select * from people where age > 20
+""")
+
+filteredPeople.show
+```
+
+```
++---+----+
+|age|name|
++---+----+
+| 30|Andy|
++---+----+
+```
+
+## Sélectionner
+```scala
+spark.sql("""
+select name from people where age > 20
+""").show
+```
+
+```
++----+
+|name|
++----+
+|Andy|
++----+
+```
+
+## Réaliser quelques statistiques 
+
+```scala
+spark.sql("""
+select max(age), min(age), round(avg(age))
+from people
+""").show
+```
+
+```
++--------+--------+------------------+
+|max(age)|min(age)|round(avg(age), 0)|
++--------+--------+------------------+
+|      30|      19|              25.0|
++--------+--------+------------------+
+```
