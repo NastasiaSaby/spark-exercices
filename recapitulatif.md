@@ -5,25 +5,43 @@
 val age = 12
 println(age) 
 ```
-
 12
-age: Int = 12
 
 ## Scala fonction
 
-def speak() {
+```
+def speak() = {
   println("salut")
 }
 
-def speak(word: String) {
+speak()
+```
+salut
+
+```
+def speak(word: String) = {
   println(word)
 }
 
-speak()
 speak("hello ")
+```
+hello
 
-def sendWord(word: String) {
+```
+def sendWord(word: String) = {
   "hello " + word
 }
 
-println(sendWord("Hello "))
+println(sendWord(" world"))
+```
+hello world
+
+## Case class
+
+```
+case class Personne(age: Int, name: String)
+val personne1 = Personne(12, "Lucien")
+
+println(personne1.age)
+```
+12
