@@ -1,4 +1,4 @@
-# Récapitulatif API DataFrame
+# Récapitulatif API Spark SQL
 
 ## Scala variable
 
