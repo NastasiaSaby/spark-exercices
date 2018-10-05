@@ -31,4 +31,19 @@ Après avoir loadé les diamants et dans l'API Dataset, on veut :
 4. Remapper la sortie dans une autre case class
 
 ## Exercice 5
-Créer une dataset correpondant à la cas
+Créer une dataset correpondant au data obtenu
+
+## Exercice 6
+
+Jointure
+
+## Exercice 7
+
+Ajouter une colonne
+
+## Exercice 8
+
+Remplacer une colonne
+
+## Exercice 9 Dropper une colonne
+
