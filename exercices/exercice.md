@@ -33,6 +33,8 @@ Après avoir loadé les diamants et dans l'API Dataset, on veut :
 ## Exercice 5
 Créer une dataset correpondant au data obtenu
 
+# Jointures et manipulation de colonnes
+
 ## Exercice 6
 1. Créer trois datasets pour correspondre aux case class suivantes :
 case class Customer(id: Int, name: String)
@@ -58,16 +60,17 @@ Product :
 3, "Batman figurine", 19.6F,
 4, "Livre de coloriage", 3.5F
 
-2. On veut savoir qui a acheté un livre de coloriage.
-3. On veut savoir qui achète des produits valant plus de 200 euros
+2. On veut savoir qui a acheté un livre de coloriage (nom du customer, nom du produit)
+3. On veut savoir qui achète des produits valant plus de 200 euros (nom du customer, nom du produit, prix)
 
 ## Exercice 7
 
-Ajouter une colonne
+Au résultat exercice 6 3, on souhaite ajouter une colonne (du nom que vous voulez) pour avoir le prix arrondi à l'unité
 
 ## Exercice 8
 
-Remplacer une colonne
+Renommer une colonne (celle de votre choix)
 
 ## Exercice 9 Dropper une colonne
 
+Supprimer la colonne prix (celui qui n'est pas arrondi)
