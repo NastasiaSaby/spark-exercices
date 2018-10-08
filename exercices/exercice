@@ -34,8 +34,32 @@ Après avoir loadé les diamants et dans l'API Dataset, on veut :
 Créer une dataset correpondant au data obtenu
 
 ## Exercice 6
+1. Créer trois datasets pour correspondre aux case class suivantes :
+case class Customer(id: Int, name: String)
+case class Order(product_id: Int customer_id: Int)
+case class Product(id: Int, name: String, price: Float)
 
-Jointure
+Les valeurs pour les datasets sont les suivantes :
+Customer :
+1, "Sophie"
+2, "Julien"
+3, "Sarah"
+4, "Irina"
+5, "Renzo"
+
+Order :
+1, 3
+2, 4,
+4, 1
+
+Product :
+1, "Lego", 230.70F
+2, "Dixit", 45.60F
+3, "Batman figurine", 19.6F,
+4, "Livre de coloriage", 3.5F
+
+2. On veut savoir qui a acheté un livre de coloriage.
+3. On veut savoir qui achète des produits valant plus de 200 euros
 
 ## Exercice 7
 
