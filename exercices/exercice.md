@@ -1,4 +1,4 @@
-# Exercice avec Spark SQL
+# Spark SQL
 
 ## Exercice 1
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
@@ -6,14 +6,14 @@ Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 2. Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
 3. Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur
 
-# Exercice avec des actions
+# Actions
 
 ## Exercice 2
 1. Enregistrer son dernier résultat (Exercice 1.3)
 2. On veut savoir le nombre de diamants
 3. On veut savoir le nombre distint de diamant
 
-# Exercice avec DataFrame
+# DataFrame
 
 ## Exercice 3
 Après avoir loadé les diamants et dans l'API DataFrame, on veut :
@@ -21,7 +21,7 @@ Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 2. Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
 3. Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur
 
-# Exercice avec Dataset
+# Dataset
 
 ## Exercice 4
 Après avoir loadé les diamants et dans l'API Dataset, on veut :
@@ -71,6 +71,6 @@ Au résultat exercice 6 3, on souhaite ajouter une colonne (du nom que vous voul
 
 Renommer une colonne (celle de votre choix)
 
-## Exercice 9 Dropper une colonne
+## Exercice 9
 
 Supprimer la colonne prix (celui qui n'est pas arrondi)
