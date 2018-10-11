@@ -38,7 +38,7 @@ Après avoir loadé les diamants et dans l'API Dataset, on veut :
 1. Créer trois datasets pour correspondre aux case class suivantes :
 
 ```scala
-case class Customer(id: Int, name: String)
+case class Customer(id: Int, firstName: String)
 case class Order(productId: Int, customerId: Int)
 case class Product(id: Int, name: String, price: Float)
 ```
