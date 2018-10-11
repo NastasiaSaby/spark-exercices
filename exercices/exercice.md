@@ -39,7 +39,7 @@ Après avoir loadé les diamants et dans l'API Dataset, on veut :
 
 ```scala
 case class Customer(id: Int, name: String)
-case class Order(product_id: Int customer_id: Int)
+case class Order(product_id: Int, customer_id: Int)
 case class Product(id: Int, name: String, price: Float)
 ```
 
