@@ -30,11 +30,9 @@ Après avoir loadé les diamants et dans l'API Dataset, on veut :
 3. Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur
 4. Remapper la sortie dans une autre case class
 
-## Exercice 5
-
 # Jointures et manipulation de colonnes
 
-## Exercice 6
+## Exercice 5
 1. Créer trois datasets pour correspondre aux case class suivantes :
 
 ```scala
@@ -74,14 +72,14 @@ Product :
 2. On veut savoir qui a acheté un livre de coloriage (nom du customer, nom du produit)
 3. On veut savoir qui achète des produits valant plus de 200 euros (nom du customer, nom du produit, prix)
 
-## Exercice 7
+## Exercice 6
 
 Au résultat de l'exercice 6.3, on souhaite ajouter une colonne (du nom que vous voulez) pour avoir le prix arrondi à l'unité
 
-## Exercice 8
+## Exercice 7
 
 Au résultat de l'exercice 6.3, renommer une colonne (celle de votre choix)
 
-## Exercice 9
+## Exercice 8
 
 Au résultat de l'exercice 6.3, Supprimer la colonne prix (celui qui n'est pas arrondi)
