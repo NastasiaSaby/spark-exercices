@@ -24,6 +24,7 @@ Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 # Dataset
 
 ## Exercice 4
+Aide : case class Diamond(_c0: Int, carat: Double, cut: String, color: String, clarity: String, depth: Double, table: Double, price: Int, x: Double, y: Double, z: Double)
 Après avoir loadé les diamants et dans l'API Dataset, on veut :
 1. Filtrer en excluant la couleur E
 2. Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
