@@ -1,6 +1,7 @@
 # Spark SQL
 
 ## Exercice 1
+Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 1. Filtrer en excluant la couleur E
 2. Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
