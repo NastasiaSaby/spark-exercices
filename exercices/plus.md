@@ -33,3 +33,32 @@ val  records = sqlContext.read.schema(schema).json("testData")
 - Enregistrer en parquet
 - Créer une table Hive dessus
 
+# Exercice 3
+
+Récupérer ces data (CSV)  :
+
+https://archive.ics.uci.edu/ml/machine-learning-databases/zoo/zoo.data
+
+Les mettre dans HDFS.
+
+Créer un schéma avec : 
+1. animal name: string 
+2. hair: boolean 
+3. feathers: boolean 
+4. eggs: boolean 
+5. milk: boolean 
+6. airborne: boolean 
+7. aquatic:	Boolean 
+8. predator: boolean 
+9. toothed:	boolean 
+10. backbone: boolean 
+11. breathes: boolean 
+12. venomous: boolean 
+13. fins: boolean 
+14. legs: Numeric (set of values: {0,2,4,5,6,8}) 
+15. tail: boolean 
+16. domestic: boolean 
+17. catsize: boolean 
+18. type: Numeric (integer values in range [1,7])
+
+Et définir quel animal non aquatique pond des œufs.
