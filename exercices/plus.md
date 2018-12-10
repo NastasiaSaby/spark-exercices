@@ -4,7 +4,7 @@
 - Avec Spark, trouver quel est l'Etat qui consomme le plus*
 - Créer une table Hive avec le résultat de ces données
 
-* Dans ce Spark, vous devez ajouter un schéma aux données entrantes pour avoir des noms autres que "_c1",...
+*Dans Spark, vous devez ajouter un schéma aux données entrantes pour avoir des noms autres que "_c1",...
 
 ```scala
 
