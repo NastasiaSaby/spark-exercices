@@ -6,6 +6,8 @@
 
 * Dans ce Spark, vous devez ajouter un schéma aux données entrantes pour avoir des noms autres que "_c1",...
 
+```scala
+
 import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 
@@ -21,3 +23,5 @@ val schema = StructType(
   )
             
 val  records =sqlContext.read.schema(schema).json("testData")
+
+```
