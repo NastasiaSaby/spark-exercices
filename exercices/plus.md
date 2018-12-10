@@ -29,7 +29,7 @@ val  records = sqlContext.read.schema(schema).json("testData")
 # Exercice 2
 
 - Importer categories et departments en parquet avec Sqoop
-- Les joindre de manière à n'avoir que "department_name" et "category_name" côte à côte
+- Les joindre de manière à n'avoir que "department_name" et "category_name" côte à côte avec Spark (ajouter un schéma des données entrantes)
 - Enregistrer en parquet
 - Créer une table Hive dessus
 
