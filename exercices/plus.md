@@ -22,6 +22,6 @@ val schema = StructType(
       )
   )
             
-val  records =sqlContext.read.schema(schema).json("testData")
+val  records = sqlContext.read.schema(schema).json("testData")
 
 ```
