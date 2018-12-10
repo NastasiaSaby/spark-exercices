@@ -37,11 +37,11 @@ val  records = sqlContext.read.schema(schema).json("testData")
 
 Récupérer ces data (CSV)  :
 
-wget -o zoo.csv https://archive.ics.uci.edu/ml/machine-learning-databases/zoo/zoo.data
+wget -O zoo.csv https://archive.ics.uci.edu/ml/machine-learning-databases/zoo/zoo.data
 
 Les mettre dans HDFS.
 
-Créer un schéma avec : 
+Dans Spark, créer un schéma avec : 
 1. animal name: string 
 2. hair: integer 
 3. feathers: integer 
@@ -61,4 +61,4 @@ Créer un schéma avec :
 17. catsize: integer 
 18. type: integer
 
-Et définir combien d'animaux non aquatiques pondent des œufs.
+Et définir combien d'animaux sont des animaux aquatiques et prédateur qui pondent des œufs.
