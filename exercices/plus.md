@@ -14,7 +14,7 @@ import org.apache.spark.sql.types._
 val schema = StructType(
       Array(
           StructField("inputType",StringType,true), 
-          StructField("originalRating",LongType,true), 
+          StructField("originalRating",IntegerType,true), 
           StructField("processed",BooleanType,true), 
           StructField("rating",LongType,true), 
           StructField("score",DoubleType,true), 
