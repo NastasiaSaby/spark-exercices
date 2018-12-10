@@ -1,7 +1,7 @@
 # Exercice 1
 
 - Récupérer les données de "customers" en CSV avec Sqoop
-- Avec Spark, trouver quel est l'Etat qui consomme le plus*
+- Avec Spark, trouver quel est l'Etat qui consomme le plus* et enregistrer le résultat en parquet
 - Créer une table Hive avec le résultat de ces données
 
 *Dans Spark, vous devez ajouter un schéma aux données entrantes pour avoir des noms autres que "_c1",...
@@ -25,3 +25,11 @@ val schema = StructType(
 val  records = sqlContext.read.schema(schema).json("testData")
 
 ```
+
+# Exercice 2
+
+- Importer categories et departments en parquet avec Sqoop
+- Les joindre de manière à n'avoir que "department_name" et "category_name" côte à côte
+- Enregistrer en parquet
+- Créer une table Hive dessus
+
