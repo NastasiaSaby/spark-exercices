@@ -37,28 +37,28 @@ val  records = sqlContext.read.schema(schema).json("testData")
 
 Récupérer ces data (CSV)  :
 
-https://archive.ics.uci.edu/ml/machine-learning-databases/zoo/zoo.data
+wget -o zoo.csv https://archive.ics.uci.edu/ml/machine-learning-databases/zoo/zoo.data
 
 Les mettre dans HDFS.
 
 Créer un schéma avec : 
 1. animal name: string 
-2. hair: boolean 
-3. feathers: boolean 
-4. eggs: boolean 
-5. milk: boolean 
-6. airborne: boolean 
-7. aquatic:	Boolean 
-8. predator: boolean 
-9. toothed:	boolean 
-10. backbone: boolean 
-11. breathes: boolean 
-12. venomous: boolean 
-13. fins: boolean 
-14. legs: Numeric (set of values: {0,2,4,5,6,8}) 
-15. tail: boolean 
-16. domestic: boolean 
-17. catsize: boolean 
-18. type: Numeric (integer values in range [1,7])
+2. hair: integer 
+3. feathers: integer 
+4. eggs: integer 
+5. milk: integer 
+6. airborne: integer 
+7. aquatic:	integer 
+8. predator: integer 
+9. toothed:	integer 
+10. backbone: integer 
+11. breathes: integer 
+12. venomous: integer 
+13. fins: integer 
+14. legs: integer
+15. tail: integer 
+16. domestic: integer 
+17. catsize: integer 
+18. type: integer
 
-Et définir quel animal non aquatique pond des œufs.
+Et définir combien d'animaux non aquatiques pondent des œufs.
