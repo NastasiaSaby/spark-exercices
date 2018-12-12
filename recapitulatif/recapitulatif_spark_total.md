@@ -1,4 +1,4 @@
-# Récapitulatif API Spark SQL
+# Exemple API Spark SQL
 
 ## Scala variable
 
@@ -244,7 +244,7 @@ from people
 +--------+--------+------------------+
 ```
 
-# Récapitulatif API DataFrame
+# Exemple API DataFrame
 
 ## Filtrer
 
@@ -316,7 +316,7 @@ people.
 +-------+--------+--------+------------------+
 ```
 
-# Récapitulatif dataset
+# Exemple dataset
 
 ## Lier une dataFrame à une case class
 
@@ -382,7 +382,7 @@ peopleStatistics.as[PeopleStatistics].show
 +-------+------+------+------+
 ```
 
-# Récpatulatif jointure
+# Exemple jointure
 
 ```scala
 case class Personne(name: String, experience: Int)
@@ -409,3 +409,56 @@ personneDS.join(revenueDS, personneDS.col("experience") === revenueDS.col("exper
 |Selim|         2|         2|   56.7|
 +-----+----------+----------+-------+
 ```
+
+# Exemple Machine Learning
+
+```scala
+
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.regression.LinearRegression
+import org.apache.spark.ml.feature.VectorAssembler
+
+case class Wine(rating: Int, price: Int)
+
+val wines = Seq(
+Wine(10, 100),
+Wine(20, 200),
+Wine(30, 300)
+).toDS
+
+val assembler = new VectorAssembler().
+   setInputCols(Array("rating")).
+   setOutputCol("features")
+
+val linearRegression = new LinearRegression().setLabelCol("price")
+
+val stages = Array(
+ assembler,
+ linearRegression
+)
+
+ //Construct the pipeline
+val pipeline = new Pipeline().setStages(stages)
+
+//We fit our DataFrame into the pipeline to generate a model
+val model = pipeline.fit(wines)
+
+val winesTest = Seq(
+Wine(12, 120),
+Wine(22, 250),
+Wine(40, 400)
+).toDS
+
+val predictions = model.transform(winesTest)
+
+predictions.show
+
+```
+
++------+-----+--------+----------+
+|rating|price|features|prediction|
++------+-----+--------+----------+
+|    12|  120|  [12.0]|     120.0|
+|    22|  250|  [22.0]|     220.0|
+|    40|  400|  [40.0]|     400.0|
++------+-----+--------+----------+
