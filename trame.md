@@ -53,7 +53,7 @@ Créer une séquence de deux chiens. Afficher pour chacun une phrase du type :
 Pour lire un fichier CSV avec Spark, on utilise cette fonction, le "show" nous permettant d'afficher les 20 premières lignes :
 
 ```scala
-val simpleDiamonds = spark.read.csv("path.csv")
+val simpleDiamonds = spark.read.csv("diamonds.csv")
 simpleDiamonds.show
 ```
 
@@ -87,7 +87,7 @@ simpleDiamonds.show
 Pour lire un fichier CSV avec Spark en prenant en compte le header, on utilise cette fonction :
 
 ```scala
-val diamondsWithHeader = spark.read.option("header", "true").csv("path.csv")
+val diamondsWithHeader = spark.read.option("header", "true").csv("diamonds.csv")
 diamondsWithHeader.show
 ```
 
@@ -114,7 +114,7 @@ root
 
 Pour inférer le schéma de data dans un fichier csv :
 ```scala
-val completeDiamonds = spark.read.option("header", "true").option("inferSchema", "true").csv("path.csv")
+val completeDiamonds = spark.read.option("header", "true").option("inferSchema", "true").csv("diamonds.csv")
 completeDiamonds.printSchema
 ```
 
@@ -138,6 +138,7 @@ On fait comme cela :
 
 ```scala
 val people = spark.read.json("/FileStore/tables/people.json")
+val people = spark.read.json("people.json")
 people.createOrReplaceTempView("people")
 
 spark.sql("""
@@ -287,7 +288,7 @@ DataFrame est plus developer friendly que Spark SQL et permet de faire les même
 Pour lire un fichier, on fait exactement pareil que pour Spark SQL.
 
 ```scala
-val diamonds = spark.read.csv("path.csv")
+val diamonds = spark.read.csv("diamonds.csv")
 ```
 
 Les "show" et "printSchema" existent aussi.
@@ -295,7 +296,10 @@ Les "show" et "printSchema" existent aussi.
 Spark SQL n'est qu'une manière de requêter la donnée. Les objets qu'elle manipule sont en fait des dataFrames.
 
 ```scala
+import org.apache.spark.sql.DataFrame
+
 val people: DataFrame = spark.read.json("/FileStore/tables/people.json")
+val people: DataFrame = spark.read.json("people.json")
 people.createOrReplaceTempView("people")
 
 val result: DataFrame = spark.sql("""
@@ -344,7 +348,7 @@ Pour réaliser des statistiques :
 import org.apache.spark.sql.functions._
 
 people.
-    agg(max("age"), min("age"), round(avg("age"), 2)).
+    agg(max("age").as("maxAge"), min("age"), round(avg("age"), 2)).
     show
 ```
 
@@ -406,16 +410,17 @@ val people: DataFrame = spark.read.json("/FileStore/tables/people.json")
 On la lie à une "case class".
 
 ```scala
-case class Personne(age: Option[Long], name: String)
-val peoplesDS: Dataset[Personne] = people.as[Personne]
-peoplesDS.show
+import org.apache.spark.sql.Dataset
+case class People(age: Long, name: String)
+val people: Dataset[People] = spark.read.json("people.json").as[People]
+people.show
 ```
 
 ```
 +----+-------+
 | age|   name|
 +----+-------+
-|null|Michael|
+|  12|Michael|
 |  30|   Andy|
 |  19| Justin|
 +----+-------+
@@ -428,8 +433,8 @@ Cependant, on a des techniques plus sécurisées pour manipuler ces objets.
 Pour filtrer une dataset
 
 ```scala
-val filteredPeople: Dataset[People] = peoplesDS.filter(people => {
-  people.age.isDefined && people.age.get > 20
+val filteredPeople: Dataset[People] = people.filter(peoplePiece => {
+  peoplePiece.age > 20
 })
 
 filteredPeople.show
@@ -438,7 +443,7 @@ filteredPeople.show
 Pour sélectionner un champ (attention là nous transformons le schéma de notre dataset) :
 
 ```scala
-val selected: Dataset[Int] = peoplesDS.map(people => { people.age })
+val selected: Dataset[Long] = people.map(peoplePiece => { peoplePiece.age })
 selected.show
 ```
 
@@ -446,7 +451,7 @@ selected.show
 +-----+
 |value|
 +-----+
-| null|
+|   12|
 |   30|
 |   19|
 +-----+
@@ -455,7 +460,7 @@ selected.show
 Pour effectuer des statistiques (attention là aussi nous transformons le schéma de notre dataset) :
 
 ```scala
-val peopleStatistics = peoplesDS.groupBy("name").agg(min("age").alias("minAge"), max("age").alias("maxAge"), round(avg("age")).alias("avgAge"))
+val peopleStatistics = people.groupBy("name").agg(min("age").alias("minAge"), max("age").alias("maxAge"), round(avg("age")).alias("avgAge"))
 
 case class PeopleStatistics(name: String, minAge: Long, maxAge: Long, avgAge: Double)
 peopleStatistics.as[PeopleStatistics].show
@@ -465,7 +470,7 @@ peopleStatistics.as[PeopleStatistics].show
 +-------+------+------+------+
 |   name|minAge|maxAge|avgAge|
 +-------+------+------+------+
-|Michael|  null|  null|  null|
+|Michael|    12|    12|  12.0|
 |   Andy|    30|    30|  30.0|
 | Justin|    19|    19|  19.0|
 +-------+------+------+------+
@@ -516,6 +521,9 @@ val someDF = Seq(
   (64, "mouse"),
   (-27, "horse")
 ).toDF("number", "word")
+
+someDF.show
+someDF.printSchema
 ```
 
 Le problème c'est que là on ne choisit pas son schéma.
@@ -543,6 +551,9 @@ val someDF = spark.createDataFrame(
   StructType(someSchema)
 )
 
+someDF.show
+someDF.printSchema
+
 ```
 
 ### Exercice 1
@@ -566,17 +577,20 @@ Pour les mêmes données, créer une dataFrame avec schéma
 On peut aussi créer des datasets. Le plus simple est de partir des case class :
 
 ```scala
-case class Personne(age: Option[Long], name: String)
-val people: Dataset[Personne] = Seq(
-        Personne(Some(12), "Lucien"),
-        Personne(Some(26), "Assia")
+case class People(age: Long, name: String)
+val people: Dataset[People] = Seq(
+        People(12, "Lucien"),
+        People(26, "Assia")
     ).toDS
+
+people.show
 ```
 
 On peut aussi créer une dataset vide :
 
 ```scala
-val people: Dataset[Personne] = spark.emptyDataset[Personne]
+val people: Dataset[People] = spark.emptyDataset[People]
+people.show
 ```
 
 ### Exercice 1
@@ -602,25 +616,29 @@ Avec Spark, on travaille souvent avec plusieurs dataFrames/datasets qu'on joint.
 Avec Spark SQL, on ferait ainsi.
 
 ```scala
-val people = ...
-val salary = ...
+val people = spark.read.json("people.json")
+val employees = spark.read.json("employees.json")
 
 people.createOrReplaceTempView("people")
-salary.createOrReplaceTempView("salary")
+employees.createOrReplaceTempView("employees")
 
 val result = spark.sql("""
 select * from people
-join salary on salary.name = people.name
+join employees on employees.name = people.name
 """)
+
+result.show
 ```
 
 Avec l'API DataFrame/Dataset, on ferait ainsi :
 
 ```scala
-val people = ...
-val salary = ...
+val people = spark.read.json("people.json")
+val employees = spark.read.json("employees.json")
 
-val result = people.join(salary, salary.col("name") === people.col("name"), "inner")
+val result = people.join(employees, employees.col("name") === people.col("name"), "inner")
+
+result.show
 ```
 
 ### Exercice 1
@@ -686,10 +704,14 @@ A l'aide de ces datasets et dans l'API DataFrame, on veut savoir qui achète des
 On peut ajouter une colonne. Avec Spark SQL :
 
 ```scala
-spark.sql("""
+val people = spark.read.json("people.json")
+people.createOrReplaceTempView("people")
+val result = spark.sql("""
 select 'something' as newColumn, name
 from people
 """)
+
+result.show
 ```
 
 Avec l'API DataFrame/Dataset :
@@ -697,22 +719,25 @@ Avec l'API DataFrame/Dataset :
 ```scala
 import org.apache.spark.sql.functions.lit
 
-val people = ...
-people.withColumn("newColumn", lit("something"))
+val people = spark.read.json("people.json")
+val result = people.withColumn("newColumn", lit("something"))
+result.show
 ```
 
 "lit" précise ici qu'on veut un littéral. On aurait pu utiliser un calcul.
 
 ```scala
-def removeAllWhitespace(col: Column): Column = {
-  regexp_replace(col, "\\s+", "")
+def replaceLetters(col: Column): Column = {
+  regexp_replace(col, "A", "B")
 }
 
-val people = ...
+val people = spark.read.json("people.json")
 val result = people.withColumn(
     "clean_words",
-    removeAllWhitespace(col("name"))
+    replaceLetters(col("name"))
 )
+
+result.show
 ```
 
 ### Exercice
@@ -730,17 +755,23 @@ Pour info, la fonction "upper" avec Spark est disponible via l'import "import or
 Avec Spark, on peut aussi renommer une colonne soit via Spark SQL :
 
 ```scala
-spark.sql("""
+val people = spark.read.json("people.json")
+people.createOrReplaceTempView("people")
+val result = spark.sql("""
     select name as lastName
     FROM people
 """)
+
+result.show
 ```
 
 Soit avec l'API DataFrame/Dataset :
 
 ```scala
-val people = ...
+val people = spark.read.json("people.json")
 val result = people.withColumnRenamed("name", "lastName")
+
+result.show
 ```
 
 ### Exercice
