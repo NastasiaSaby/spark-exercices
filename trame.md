@@ -1,4 +1,5 @@
 [Spark Documentation](https://spark.apache.org/docs/2.4.0/)
+[Scala Documnetation](https://docs.scala-lang.org/)
 
 # Plan
 
@@ -34,7 +35,7 @@ Pour info Databricks a été fondé par les créateurs de Spark et agit en suppo
 
 Créer une classe "Dog" pouvant représenter des chiens avec leur nom, âge et couleur.
 
-Créer une fonction capable de prendre un chat en entrée et de renvoyer une string du type :
+Créer une fonction capable de prendre un chien en entrée et de renvoyer une string du type :
 "Le chien Hachiko a 15 ans et il est de couleur marron".
 
 ## Exercice 2
@@ -195,14 +196,14 @@ Pour réaliser quelques statistiques :
 
 ```scala
 spark.sql("""
-select max(age), min(age), round(avg(age))
+select max(age) as maxAge, min(age), round(avg(age))
 from people
 """).show
 ```
 
 ```
 +--------+--------+------------------+
-|max(age)|min(age)|round(avg(age), 0)|
+|maxAge  |min(age)|round(avg(age), 0)|
 +--------+--------+------------------+
 |      30|      19|              25.0|
 +--------+--------+------------------+
@@ -217,16 +218,38 @@ Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 Filtrer en excluant la couleur E
 
 ### Exercice 2
+
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+Sélectionner uniquement les champs "cut", "clarity" et "depth"
 
 ### Exercice 3
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+
+### Exercice 4
+Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
+
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur.
+
+Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+Ordonner par "avgPrice".
+
+### Exercice 5
+Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
+
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par carat.
+
+Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+Ordonner par "avgPrice".
+
+Que notez-vous par rapport au résultat de l'exercice 4 ?
 
 **Utiliser des "show" et "printSchema" pour vérifier vos résultats.**
 
@@ -252,10 +275,10 @@ people.write.csv("path")
 ```
 
 ### Exercice 1
-On veut savoir le nombre de diamants
+On veut savoir le nombre de diamants total
 
 ### Exercice 2
-On veut savoir le nombre distint de diamant
+On veut savoir le nombre distint de "cut"
 
 ## DataFrame : une deuxième API haut niveau
 
@@ -347,15 +370,26 @@ Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 
 Filtrer en excluant la couleur E
 
+
 ### Exercice 2
 Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+Sélectionner uniquement les champs "cut", "clarity" et "depth"
 
 ### Exercice 3
 Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+
+Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+
+### Exercice 4
+Après avoir loadé les diamants et dans l'API DataFrame, on veut :
+
 Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur
+
+Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+Ordonner par "avgPrice"
 
 ## Dataset : une troisième API haut niveau
 
@@ -449,9 +483,18 @@ Aide : case class Diamond(_c0: Int, carat: Double, cut: String, color: String, c
 
 Après avoir loadé les diamants et dans l'API Dataset, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+Sélectionner uniquement les champs "cut", "clarity" et "depth".
+
+On peut là passer d'un type de dataset à un autre.
 
 ### Exercice 3
+Aide : case class Diamond(_c0: Int, carat: Double, cut: String, color: String, clarity: String, depth: Double, table: Double, price: Int, x: Double, y: Double, z: Double)
+
+Après avoir loadé les diamants et dans l'API Dataset, on veut :
+
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+
+### Exercice 4
 Aide : case class Diamond(_c0: Int, carat: Double, cut: String, color: String, clarity: String, depth: Double, table: Double, price: Int, x: Double, y: Double, z: Double)
 
 Après avoir loadé les diamants et dans l'API Dataset, on veut :
@@ -490,7 +533,7 @@ val someData = Seq(
   Row(-27, "horse")
 )
 
-val someSchema = List(
+val someSchema = Seq(
   StructField("number", IntegerType, true),
   StructField("word", StringType, true)
 )
@@ -509,6 +552,7 @@ Pour les données suivantes, créer une dataFrame sans schéma :
 ```
 Batman, Super Héros, 32
 Le Pingouin, Super Méchant, 45
+Catwoman, Difficile à dire, 32
 ```
 
 ### Exercice 2
@@ -524,8 +568,8 @@ On peut aussi créer des datasets. Le plus simple est de partir des case class :
 ```scala
 case class Personne(age: Option[Long], name: String)
 val people: Dataset[Personne] = Seq(
-    Personne(Some(12), "Lucien"),
-    Personne(Some(26), "Assia")
+        Personne(Some(12), "Lucien"),
+        Personne(Some(26), "Assia")
     ).toDS
 ```
 
@@ -542,6 +586,7 @@ Créer une dataset pour les données suivantes (toujours les mêmes) :
 ```
 Batman, Super Héros, 32
 Le Pingouin, Super Méchant, 45
+Catwoman, Difficile à dire, 32
 ```
 
 ### Exercice 2
@@ -615,8 +660,24 @@ Product :
 4, "Livre de coloriage", 3.5F
 ```
 
-2. On veut savoir qui a acheté un livre de coloriage (nom du customer, nom du produit)
-3. On veut savoir qui achète des produits valant plus de 200 euros (nom du customer, nom du produit, prix)
+### Exercice 2
+
+A l'aide de ces datasets et dans l'API Spark SQL, on veut savoir qui a acheté un livre de coloriage (nom du customer, nom du produit)
+
+
+### Exercice 3
+
+A l'aide de ces datasets et dans l'API DataFrame, on veut savoir qui a acheté un livre de coloriage (nom du customer, nom du produit)
+
+
+### Exercice 4
+
+A l'aide de ces datasets et dans l'API Spark SQL, on veut savoir qui achète des produits valant plus de 200 euros (nom du customer, nom du produit, prix)
+
+
+### Exercice 5
+
+A l'aide de ces datasets et dans l'API DataFrame, on veut savoir qui achète des produits valant plus de 200 euros (nom du customer, nom du produit, prix)
 
 ## Ajouter une colonne
 
@@ -650,11 +711,13 @@ def removeAllWhitespace(col: Column): Column = {
 val people = ...
 val result = people.withColumn(
     "clean_words",
-    removeAllWhitespace("name")
+    removeAllWhitespace(col("name"))
 )
 ```
 
 ### Exercice
+
+Avec Spark SQL ou l'API DataFrame :
 
 Ajouter aux données des diamants une colonne (du nom que vous voulez) pour avoir le cut en majuscule.
 Pour info, la fonction "upper" avec Spark est disponible via l'import "import org.apache.spark.sql.functions.upper" ou directement avec "upper" dans Spark SQL.
@@ -706,6 +769,7 @@ Je vous propose une suite de petits exercices pour balayer tout ce que nous veno
 ### Exercice 1
 
 Quel est le nombre de couleurs différentes par type de coupe ("cut") ?
+Dans les fonctions Spark disponibles dans l'API DataFrame, il existe une fonction "countDistinct".
 
 ### Exercice 2
 
@@ -740,10 +804,25 @@ De l'autre côté, nous avons les départements avec le nom et la description :
 
 ```
 WEB, S'occupe du site web coorporate
-DATA, S'occupe des data
+DATA, S'occupe des grosses données
 ```
 
 Nous voulons joindre aux premières données la description du département et passer le nom du département en minuscule.
+
+Pour effectuer des calculs ou opérations sur des sélections :
+
+
+```scala
+// Select everybody, but increment the age by 1
+df.select($"name", $"age" + 1).show()
+// +-------+---------+
+// |   name|(age + 1)|
+// +-------+---------+
+// |Michael|     null|
+// |   Andy|       31|
+// | Justin|       20|
+// +-------+---------+
+```
 
 ### Exercice 4 : Cas de calcul de résultats d'AB Testing
 
@@ -759,9 +838,9 @@ A chaque fois qu'un utilisateur regarde une vidéo, on enregistre les informatio
 Nos données ressemblent à ça :
 
 ```
-user1,blue,1
-user2,green,1
-user1,blue,1
+user1,blue,2
+user2,green,5
+user1,blue,3
 user1,blue,1
 user3,blue,1
 ```
@@ -807,6 +886,19 @@ spark.sql("""select myUpper('iii')""").show
 ```
 
 Une UDF peut aussi prendre plusieurs paramètres.
+
+```scala
+val printDescription: (String, String) => String = (name, age) => name + " is " + age + " years old"
+
+val people = ...
+
+import org.apache.spark.sql.functions.udf
+val printDescriptionUDF = udf(printDescription)
+
+val result = people.withColumn("description", printDescription(col("name"), col("age")))
+
+result.show
+```
 
 ## Exercice
 
@@ -885,9 +977,9 @@ Soit via l'API DataFrame/Dataset :
 ```
 val empsalary = ...
 import org.apache.spark.sql.expressions.Window
-val byDepName = Window.partitionBy('depName)
+val byDepName = Window.partitionBy("depName")
 
-empsalary.withColumn("avgSalary", avg('salary) over byDepName).show
+empsalary.withColumn("avgSalary", avg("salary") over byDepName).show
 ```
 
 ### Exercice 1
@@ -896,7 +988,7 @@ Calculer le prix moyen des diamants par couleur avec une fonction "window" de ma
 
 ### Exercice 2
 
-Calculer le prix maximum et minimum des diamants par carat avec une fonction "window" de manière à pouvoir
+Calculer le prix maximum et minimum des diamants par carat avec des fonctions "window" de manière à pouvoir afficher le reste des informations.
 
 ## Utiliser les window functions pour faire du ranking
 
@@ -944,6 +1036,7 @@ empsalary.withColumn("rankByDepName", rank() over byDepnameSalaryDesc).show
 ### Exercice 1
 
 On veut connaître le diamant qui coûte le plus cher par couleur.
+Que pouvons-nous remarquer dans les résultats ?
 
 ### Exercice 2
 
@@ -960,6 +1053,12 @@ Pro, Tablet, 4500
 ```
 
 Avec une fonction de "window", à partir de celles-ci, on veut savoir quels sont les  produits qui se vendent le mieux pour chaque catégorie.
+
+### Exercice 3
+
+Il existe d'autres types de fonctions pour faire du window ranking comme "dense_rank()" ou "row_number()".
+
+Vous pouvez chercher dans la documentation comment utiliser ces fonctions et générer vos propres cas de tests pour les explorer.
 
 # 8. Manipulation de données encore plus avancée
 
