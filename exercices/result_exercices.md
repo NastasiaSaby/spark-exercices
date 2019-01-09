@@ -24,8 +24,7 @@ val medor = Dog(7, "Medor", "white")
 
 val dogs = Seq(hachiko, medor)
 
-dogs.foreach(dog => {
-    printDog(dog)
+dogs.foreach(dog => printDog(dog))
 
 # 3. Découverte des APIS haut niveau
 
@@ -534,7 +533,7 @@ result.show
 
 # 6. UDF (User Defined Function)
 
-## Exercice
+## Exercice 1
 
 val groupCutAndColor: (String, String) => String = (cut, color) => cut(0) + color
 
@@ -546,6 +545,19 @@ val groupCutAndColorUDF = udf(groupCutAndColor)
 val result = diamonds.withColumn("cutColor", groupCutAndColorUDF(col("cut"), col("color")))
 
 result.show
+
+## Exercice 2
+
+*En combinant des fonctions*
+
+import org.apache.spark.sql.functions._
+
+val diamonds = spark.read.option("header", "true").option("inferSchema", "true").csv("diamonds.csv")
+
+val result = diamonds.withColumn("cutColor", concat(substring(col("cut"), 0, 1), col("color")))
+
+result.show
+
 
 # 7. Les Window functions
 

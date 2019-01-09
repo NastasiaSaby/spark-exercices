@@ -1,5 +1,11 @@
 [Spark Documentation](https://spark.apache.org/docs/2.4.0/)
 
+[Scala Documnetation](https://docs.scala-lang.org/)
+
+/FileStore/tables/people.json
+
+/databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+
 # Plan
 
 //Explications jusqu'à Spark SQL

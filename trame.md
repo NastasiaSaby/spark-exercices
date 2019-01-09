@@ -1,5 +1,6 @@
 [Spark Documentation](https://spark.apache.org/docs/2.4.0/)
-[Scala Documnetation](https://docs.scala-lang.org/)
+
+[Scala Documentation](https://docs.scala-lang.org/)
 
 # Plan
 
@@ -137,20 +138,21 @@ Avec l'API "Spark SQL", nous allons requêter nos données. Pour cela, nous avon
 On fait comme cela :
 
 ```scala
-val people = spark.read.json("/FileStore/tables/people.json")
 val people = spark.read.json("people.json")
 people.createOrReplaceTempView("people")
 
-spark.sql("""
+val result = spark.sql("""
 select * from people
-""").show
+""")
+
+result.show
 ```
 
 ```
 +----+-------+
 | age|   name|
 +----+-------+
-|null|Michael|
+|  12|Michael|
 |  30|   Andy|
 |  19| Justin|
 +----+-------+
@@ -214,6 +216,7 @@ Beaucoup de choses disponibles en SQL sont disponibles avec Spark SQL : orderBy,
 
 ### Exercice 1
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 
 Filtrer en excluant la couleur E
@@ -221,36 +224,43 @@ Filtrer en excluant la couleur E
 ### Exercice 2
 
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 
 Sélectionner uniquement les champs "cut", "clarity" et "depth"
 
 ### Exercice 3
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 
 Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
 
 ### Exercice 4
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 
 Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur.
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+
 Ordonner par "avgPrice".
 
 ### Exercice 5
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+
 Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
 
 Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par carat.
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+
 Ordonner par "avgPrice".
 
-Que notez-vous par rapport au résultat de l'exercice 4 ?
+*Que notez-vous par rapport au résultat de l'exercice 4 ?*
 
 **Utiliser des "show" et "printSchema" pour vérifier vos résultats.**
 
@@ -258,18 +268,18 @@ Que notez-vous par rapport au résultat de l'exercice 4 ?
 
 ### Explications transformations et actions
 
-Dans Spark, il y a ce qu'on appelle des transformations qui, comme son nom l'indique, transforme la donnée en filtrant, ajoutant des éléments, sélectionnant certains champs, ...
+Dans Spark, il y a ce qu'on appelle des transformations qui, comme son nom l'indique, transforme la donnée en filtrant, ajoutant des éléments, sélectionnant certains champs,etc.
 
 Et puis il y a des actions :
-- Qui renvoie la donnée en console comme "show" ou "printSchema"
-- Qui renvoie dans l'API Scala comme un "count" qui renvoie un "Int"
+
+- Qui renvoie la donnée en console, comme "show" ou "printSchema"
+- Qui renvoie dans l'API Scala, comme un "count" qui renvoie un "Int"
 - Qui écrive la donnée vers l'extérieur (filesystem par exemple)
 
 Exemples :
 
 ```scala
 people.show
-people.printSchema
 people.count
 people.distinct.count //Dans ce cas-là c'est "count" qui fait l'action, "distinct" est une transformation
 people.write.csv("path")
@@ -298,7 +308,6 @@ Spark SQL n'est qu'une manière de requêter la donnée. Les objets qu'elle mani
 ```scala
 import org.apache.spark.sql.DataFrame
 
-val people: DataFrame = spark.read.json("/FileStore/tables/people.json")
 val people: DataFrame = spark.read.json("people.json")
 people.createOrReplaceTempView("people")
 
@@ -393,18 +402,21 @@ Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
+
 Ordonner par "avgPrice"
 
 ## Dataset : une troisième API haut niveau
 
 ### Explications Dataset
 
-Les datasets sont une troisième API haut niveau. Elles apportent plus de sécurité parce qu'elles permettent de typer les dataFrames en les liant aux "case class". L'inconvénient c'est qu'elles sont plus gourmandes.
+Les datasets sont une troisième API haut niveau. Elles apportent plus de sécurité parce qu'elles permettent de typer les dataFrames en les liant aux "case class".
+
+L'inconvénient c'est qu'elles sont plus gourmandes.
 
 Pour utiliser cette API, on part d'une DataFrame.
 
 ```scala
-val people: DataFrame = spark.read.json("/FileStore/tables/people.json")
+val people: DataFrame = spark.read.json("people.json")
 ```
 
 On la lie à une "case class".
@@ -785,8 +797,10 @@ Renommer une colonne de votre choix dans les données de diamants.
 Avec Spark, on peut aussi supprimer une colonne. Soit en ne la nommant pas dans SparkSQL, soit via l'API DataFrame/Dataset :
 
 ```scala
-val people = ...
+val people = spark.read.json("people.json")
 val result = people.drop("name")
+
+result.show
 ```
 
 ### Exercice
@@ -859,8 +873,8 @@ df.select($"name", $"age" + 1).show()
 
 Supposons que nous traitons d'un AB Test sur un site de vidéo. La variante est la couleur de fond :
 
-50% de la population a un fond bleu
-50% de la population a un fond vert
+- 50% de la population a un fond bleu
+- 50% de la population a un fond vert
 
 On veut savoir quelle est la couleur que les utilisateurs préfèrent pour regarder les vidéos.
 
@@ -891,6 +905,7 @@ val upper: String => String = word => word.toUpperCase
 import org.apache.spark.sql.functions.udf
 val upperUDF = udf(upper)
 
+val diamonds = spark.read.option("header", "true").option("inferSchema", "true").csv("diamonds.csv")
 diamonds.withColumn("upperCut", upperUDF(col("cut"))).show
 ```
 
@@ -931,9 +946,20 @@ val result = people.withColumn("description", printDescription(col("name"), col(
 result.show
 ```
 
-## Exercice
+## Exercice 1
 
-Nous allons créer une UDF dans un cas d'école : afficher la première lettre du "cut" des diamants suivie de la couleur. Cela donnerait, pour "Ideal" comme "cut" et "E" comme couleur, "IE"
+Nous allons créer une UDF dans un cas d'école : afficher la première lettre du "cut" des diamants suivie de la couleur.
+
+Cela donnerait, pour "Ideal" comme "cut" et "E" comme couleur, "IE"
+
+## Exercice 2
+
+Mais les UDFs, c'est coûteux.
+
+Avec la liste des fonctions de sql, pouvez-vous imaginer une solution pour avoir le même résultat sans passer par une UDF ?
+
+[Liste des fonctions SQL](https://spark.apache.org/docs/2.0.2/api/java/org/apache/spark/sql/functions.html)
+
 
 # 7. Les Window functions
 
