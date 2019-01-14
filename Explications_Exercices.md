@@ -214,6 +214,8 @@ from people
 
 Beaucoup de choses disponibles en SQL sont disponibles avec Spark SQL : orderBy, limit, groupBy, etc.
 
+**Pour vous aider, vous pouvez utiliser des "show" et "printSchema" pour vérifier vos résultats.**
+
 ### Exercice 1
 Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
 
@@ -223,46 +225,38 @@ Filtrer en excluant la couleur E
 
 ### Exercice 2
 
-Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
-
-Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
+Toujours avec les mêmes diamants, dans l'API Spark SQL, on veut :
 
 Sélectionner uniquement les champs "cut", "clarity" et "depth"
 
 ### Exercice 3
-Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+Toujours avec les mêmes diamants, dans l'API Spark SQL, on veut :
 
-Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
-
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à l'unité après la virgule pour l'ensemble des diamants
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
 
+Pour rappel en SQL, un alias ressemble à ça : "as maxPrice".
+
 ### Exercice 4
-Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+Toujours avec les mêmes diamants, dans l'API Spark SQL, on veut :
 
-Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
-
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur.
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à l'unité après la virgule par couleur.
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
 
 Ordonner par "avgPrice".
 
 ### Exercice 5
-Data Diamonds : /databricks-datasets/Rdatasets/data-001/csv/ggplot2/diamonds.csv
+Toujours avec les mêmes diamants, dans l'API Spark SQL, on veut :
 
-Après avoir loadé les diamants et dans l'API Spark SQL, on veut :
-
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par carat.
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à l'unité après la virgule par carat.
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
 
 Ordonner par "avgPrice".
 
 *Que notez-vous par rapport au résultat de l'exercice 4 ?*
-
-**Utiliser des "show" et "printSchema" pour vérifier vos résultats.**
 
 ## Transformations et actions : le coeur de Spark
 
@@ -272,7 +266,7 @@ Dans Spark, il y a ce qu'on appelle des transformations qui, comme son nom l'ind
 
 Et puis il y a des actions :
 
-- Qui renvoie la donnée en console, comme "show" ou "printSchema"
+- Qui renvoie la donnée en console, comme "show"
 - Qui renvoie dans l'API Scala, comme un "count" qui renvoie un "Int"
 - Qui écrive la donnée vers l'extérieur (filesystem par exemple)
 
@@ -392,14 +386,14 @@ Sélectionner uniquement les champs "cut", "clarity" et "depth"
 ### Exercice 3
 Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à l'unité pour l'ensemble des diamants
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
 
 ### Exercice 4
 Après avoir loadé les diamants et dans l'API DataFrame, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à l'unité par couleur
 
 Utiliser les alias "maxPrice", "minPrice", "avgPrice".
 
@@ -424,7 +418,7 @@ On la lie à une "case class".
 ```scala
 import org.apache.spark.sql.Dataset
 case class People(age: Long, name: String)
-val people: Dataset[People] = spark.read.json("people.json").as[People]
+val people: Dataset[People] = spark.read.json("/FileStore/tables/people.json").as[People]
 people.show
 ```
 
@@ -509,14 +503,14 @@ Aide : case class Diamond(_c0: Int, carat: Double, cut: String, color: String, c
 
 Après avoir loadé les diamants et dans l'API Dataset, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule pour l'ensemble des diamants
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à l'unité pour l'ensemble des diamants
 
 ### Exercice 4
 Aide : case class Diamond(_c0: Int, carat: Double, cut: String, color: String, clarity: String, depth: Double, table: Double, price: Int, x: Double, y: Double, z: Double)
 
 Après avoir loadé les diamants et dans l'API Dataset, on veut :
 
-Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à 2 après la virgule par couleur et remapper la sortie dans une autre case class
+Calculer le prix minimum, le prix maximum, le prix moyen en arrondissant à l'unité par couleur et remapper la sortie dans une autre case class
 
 # 4. Manipulation de données plus avancées
 
