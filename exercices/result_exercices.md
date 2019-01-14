@@ -67,7 +67,7 @@ val diamonds = spark.read.option("header", "true").option("inferSchema", "true")
 diamonds.createOrReplaceTempView("diamonds")
 
 val result = spark.sql("""
-    SELECT min(price) as minPrice, max(price) as maxPrice, round(avg(price), 2) as avgPrice
+    SELECT min(price) as minPrice, max(price) as maxPrice, round(avg(price)) as avgPrice
     FROM diamonds
 """)
 
@@ -80,7 +80,7 @@ val diamonds = spark.read.option("header", "true").option("inferSchema", "true")
 diamonds.createOrReplaceTempView("diamonds")
 
 val result = spark.sql("""
-    SELECT min(price) as minPrice, max(price) as maxPrice, round(avg(price), 2) as avgPrice, color
+    SELECT min(price) as minPrice, max(price) as maxPrice, round(avg(price)) as avgPrice, color
     FROM diamonds
     GROUP BY color
     ORDER By avgPrice
@@ -95,7 +95,7 @@ val diamonds = spark.read.option("header", "true").option("inferSchema", "true")
 diamonds.createOrReplaceTempView("diamonds")
 
 val result = spark.sql("""
-    SELECT min(price) as minPrice, max(price) as maxPrice, round(avg(price), 2) as avgPrice, carat
+    SELECT min(price) as minPrice, max(price) as maxPrice, round(avg(price)) as avgPrice, carat
     FROM diamonds
     GROUP BY carat
     ORDER BY avgPrice
@@ -146,7 +146,7 @@ val diamonds = spark.read.option("header", "true").option("inferSchema", "true")
 import org.apache.spark.sql.functions._
 
 val result = diamonds.
-    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price"), 2).as("avgPrice"))
+    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price")).as("avgPrice"))
 
 result.show
 
@@ -157,7 +157,7 @@ import org.apache.spark.sql.functions._
 
 val result = diamonds.
     groupBy("color").
-    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price"), 2).as("avgPrice")).
+    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price")).as("avgPrice")).
     orderBy("avgPrice")
 
 result.show
@@ -198,7 +198,7 @@ val diamonds = spark.read.option("header", "true").option("inferSchema", "true")
 import org.apache.spark.sql.functions._
 
 val result = diamonds.
-    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price"), 2).as("avgPrice"))
+    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price")).as("avgPrice"))
 
 result.show
 
@@ -212,7 +212,7 @@ import org.apache.spark.sql.functions._
 
 val result = diamonds.
     groupBy("color").
-    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price"), 2).as("avgPrice")).
+    agg(max("price").as("maxPrice"), min("price").as("minPrice"), round(avg("price")).as("avgPrice")).
     orderBy("avgPrice")
 
 result.show
