@@ -29,6 +29,7 @@ Pour info Databricks a été fondé par les créateurs de Spark et agit en suppo
 6. Choisissez votre mot de passe
 7. Après avoir cliqué “Reset password”, vous voilà dans la plateforme que nous allons utiliser
 8. Cliquer sur "New notebook" pour ouvrir un nouveau notebook
+9.
 
 # 2. Prendre en main Scala
 
