@@ -31,8 +31,11 @@ Pour info Databricks a été fondé par les créateurs de Spark et agit en suppo
 8. Cliquer sur "New notebook" pour ouvrir un nouveau notebook
 9. Choisir le nom que vous voulez et bien spécifier "Scala"
 10. Cliquer sur Detached
-11. Créer un cluster
-12. Attacher le notebook au cluster
+11. Cliquer sur "create a cluster"
+12. Entrer un nom dans le champ "Cluster Name"
+13. Cliquer "Create Cluster"
+14. Retourner au notebook en cliquant "databricks" puis en choisissant votre notebook
+15. Cliquer sur "Detached" et sélectionner le cluster récemment créé
 
 # 2. Prendre en main Scala
 
